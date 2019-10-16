@@ -10,6 +10,7 @@ Describe 'ConvertTo-Json' -tags "CI" {
         $EgJObject.Add("TestValue1", "123456")
         $EgJObject.Add("TestValue2", "78910")
         $EgJObject.Add("TestValue3", "99999")
+        $EgJObject.Add("nullValue", $null)
         $dict = @{}
         $dict.Add('JObject', $EgJObject)
         $dict.Add('StrObject', 'This is a string Object')
@@ -19,6 +20,7 @@ Describe 'ConvertTo-Json' -tags "CI" {
         $jsonFormat | Should -Match '"TestValue1": 123456'
         $jsonFormat | Should -Match '"TestValue2": 78910'
         $jsonFormat | Should -Match '"TestValue3": 99999'
+        $jsonFormat | Should -Match '"nullValue": null'
     }
 
 	It "StopProcessing should succeed" -Pending:$true {
