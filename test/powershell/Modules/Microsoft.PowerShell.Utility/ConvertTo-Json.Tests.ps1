@@ -77,7 +77,7 @@ Describe 'ConvertTo-Json' -tags "CI" {
         $dict.Add('abc', "'def'")
         $dict.Add('nullValue', $null)
         $jsonFormat = ConvertTo-Json -InputObject $dict -IgnoreNullProperties
-        $jsonFormat | Should -BeExactly "{$newline  ""abc"": "'def'"$newline}"
+        $jsonFormat | Should -BeExactly "{$newline  ""abc"": ""'def'""$newline}"
     }
 
     It "Should handle 'AutomationNull.Value' and 'NullString.Value' correctly" {
