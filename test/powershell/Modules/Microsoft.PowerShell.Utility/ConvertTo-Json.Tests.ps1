@@ -120,4 +120,15 @@ Describe 'ConvertTo-Json' -tags "CI" {
             [nullable[int]]$nullValue=$null
         }
     }
+
+    It 'The Newtonsoft.Json.Linq.JObject should remain unchanged with IgnoreNullProperties.' {
+        $EgJObject = New-Object -TypeName Newtonsoft.Json.Linq.JObject
+        $EgJObject.Add("TestValue3", "99999")
+        $EgJObject.Add("nullValue", $null)
+        $jsonFormatOriginal = ConvertTo-Json -InputObject $EgJObject
+        $jsonFormatIgnoreNull = ConvertTo-Json -InputObject $EgJObject -IgnoreNullProperties
+        $jsonFormatUnchanged = ConvertTo-Json -InputObject $EgJObject
+        $jsonFormatIgnoreNull | Should -BeExactly "{$newline  ""TestValue3"": 99999$newline}"
+        $jsonFormatUnchanged | Should -BeExactly $jsonFormatOriginal
+    }
 }
