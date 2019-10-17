@@ -742,6 +742,11 @@ namespace Microsoft.PowerShell.Commands
                 {
                 }
 
+                if (value == null && context.IgnoreNullProperties)
+                {
+                    continue;
+                }
+
                 if (!receiver.Contains(prop.Name))
                 {
                     receiver[prop.Name] = ProcessValue(value, depth + 1, in context);
