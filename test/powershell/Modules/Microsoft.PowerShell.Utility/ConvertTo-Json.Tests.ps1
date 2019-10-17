@@ -72,6 +72,14 @@ Describe 'ConvertTo-Json' -tags "CI" {
         1, $null, 2 | ConvertTo-Json -Compress | Should -Be '[1,null,2]'
     }
 
+    It 'The result string should not contain null values when converting dictionary with IgnoreNullProperties.' {
+        $dict = @{}
+        $dict.Add('abc', "'def'")
+        $dict.Add('nullValue', $null)
+        $jsonFormat = ConvertTo-Json -InputObject $dict -IgnoreNullProperties
+        $jsonFormat | Should -BeExactly "{$newline  ""abc"": "'def'"$newline}"
+    }
+
     It "Should handle 'AutomationNull.Value' and 'NullString.Value' correctly" {
         [ordered]@{
             a = $null;
@@ -103,6 +111,13 @@ Describe 'ConvertTo-Json' -tags "CI" {
         {
             $p1.psobject.Properties.Remove('dbnull')
             $p2.psobject.Properties.Remove('nullstr')
+        }
+    }
+
+    It 'The result string should not contain null values when converting custom PS object with IgnoreNullProperties.' {
+        class CustomClass {
+            [String]$name="abc"
+            [nullable[int]]$nullValue=$null
         }
     }
 }
